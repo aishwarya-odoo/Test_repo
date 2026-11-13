@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tally_integration_config_user,tally.integration.config.user,model_tally_integration_config,group_tally_user,1,0,0,0
+access_tally_integration_config_manager,tally.integration.config.manager,model_tally_integration_config,group_tally_manager,1,1,1,1
+access_tally_sync_queue_user,tally.sync.queue.user,model_tally_sync_queue,group_tally_user,1,0,0,0
+access_tally_sync_queue_manager,tally.sync.queue.manager,model_tally_sync_queue,group_tally_manager,1,1,1,1
+access_tally_sync_mapping_user,tally.sync.mapping.user,model_tally_sync_mapping,group_tally_user,1,0,0,0
+access_tally_sync_mapping_manager,tally.sync.mapping.manager,model_tally_sync_mapping,group_tally_manager,1,1,1,1
+access_tally_sync_conflict_user,tally.sync.conflict.user,model_tally_sync_conflict,group_tally_user,1,1,0,0
+access_tally_sync_conflict_manager,tally.sync.conflict.manager,model_tally_sync_conflict,group_tally_manager,1,1,1,1
+access_tally_sync_dashboard_user,tally.sync.dashboard.user,model_tally_sync_dashboard,group_tally_user,1,1,1,1

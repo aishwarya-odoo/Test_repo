@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- Default configuration for this environment. sync_enabled is left off
+         on purpose: use "Test RabbitMQ Connection" to confirm connectivity
+         before turning it on (see CONFIGURATION.md's recommended sequence). -->
+    <record id="tally_integration_config_default" model="tally.integration.config">
+        <field name="name">Tally Integration</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="tally_company_name">PearlSoft Logistics</field>
+        <field name="tally_gateway_url">http://192.168.2.55:9000/</field>
+        <field name="rabbitmq_host">rabbitmq</field>
+        <field name="rabbitmq_port">5672</field>
+        <field name="rabbitmq_virtual_host">/</field>
+        <field name="rabbitmq_username">odoo</field>
+        <field name="rabbitmq_password">odoo</field>
+        <field name="sync_enabled" eval="False" />
+    </record>
+</odoo>

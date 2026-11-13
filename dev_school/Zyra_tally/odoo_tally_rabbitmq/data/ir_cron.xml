@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="cron_tally_process_outbox" model="ir.cron">
+        <field name="name">Tally: process outbox</field>
+        <field name="model_id" ref="model_tally_sync_queue" />
+        <field name="state">code</field>
+        <field name="code">model.cron_process_outbox()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True" />
+    </record>
+
+    <record id="cron_tally_consume_incoming_partners" model="ir.cron">
+        <field name="name">Tally: consume incoming customer/vendor events</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="state">code</field>
+        <field name="code">model.cron_consume_incoming_partners()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True" />
+    </record>
+
+    <record id="cron_tally_consume_incoming_products" model="ir.cron">
+        <field name="name">Tally: consume incoming product events</field>
+        <field name="model_id" ref="product.model_product_template" />
+        <field name="state">code</field>
+        <field name="code">model.cron_consume_incoming_products()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True" />
+    </record>
+
+    <record id="cron_tally_consume_incoming_invoices" model="ir.cron">
+        <field name="name">Tally: consume incoming invoice events</field>
+        <field name="model_id" ref="account.model_account_move" />
+        <field name="state">code</field>
+        <field name="code">model.cron_consume_incoming_invoices()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True" />
+    </record>
+
+    <record id="cron_tally_consume_incoming_payments" model="ir.cron">
+        <field name="name">Tally: consume incoming payment events</field>
+        <field name="model_id" ref="account.model_account_payment" />
+        <field name="state">code</field>
+        <field name="code">model.cron_consume_incoming_payments()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True" />
+    </record>
+</odoo>

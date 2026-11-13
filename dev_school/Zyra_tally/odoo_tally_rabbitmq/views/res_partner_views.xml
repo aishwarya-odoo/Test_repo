@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_partner_form_tally" model="ir.ui.view">
+        <field name="name">res.partner.form.tally</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header invisible="not (customer_rank or supplier_rank)">
+                    <button name="button_tally_sync" type="object" string="Sync to Tally" class="oe_highlight" />
+                    <field name="tally_sync_state" widget="statusbar" statusbar_visible="not_synced,pending,synced" />
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_tally_sync_customers" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('customer_rank', '&gt;', 0), ('parent_id', '=', False)]</field>
+        <field name="context">{'default_customer_rank': 1}</field>
+    </record>
+
+    <record id="action_tally_sync_vendors" model="ir.actions.act_window">
+        <field name="name">Vendors</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('supplier_rank', '&gt;', 0), ('parent_id', '=', False)]</field>
+        <field name="context">{'default_supplier_rank': 1}</field>
+    </record>
+</odoo>

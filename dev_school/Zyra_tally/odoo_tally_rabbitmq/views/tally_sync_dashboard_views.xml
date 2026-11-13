@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_tally_sync_dashboard_form" model="ir.ui.view">
+        <field name="name">tally.sync.dashboard.form</field>
+        <field name="model">tally.sync.dashboard</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_sync_now" type="object" string="Sync Now" class="btn-primary" />
+                    <button name="action_retry_failed" type="object" string="Retry Failed" />
+                    <button name="action_retry_dead_letter" type="object" string="Retry Dead Letter" />
+                    <button name="action_test_connection" type="object" string="Test Connection" />
+                    <button name="action_refresh" type="object" string="Refresh" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_queue" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="pending_count" widget="statinfo" string="Pending" />
+                        </button>
+                        <button name="action_view_dead_letter" type="object" class="oe_stat_button" icon="fa-exclamation-triangle">
+                            <field name="dead_letter_count" widget="statinfo" string="Dead Letter" />
+                        </button>
+                        <button name="action_view_conflicts" type="object" class="oe_stat_button" icon="fa-random">
+                            <field name="conflict_count" widget="statinfo" string="Conflicts" />
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Connection">
+                            <field name="connection_status" widget="badge"
+                                   decoration-success="connection_status == 'connected'"
+                                   decoration-danger="connection_status in ('failed', 'not_configured')" />
+                            <field name="sync_enabled" />
+                        </group>
+                        <group string="Outbox">
+                            <field name="processing_count" />
+                            <field name="success_count" />
+                            <field name="retry_count" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- A plain ir.actions.act_window always opens with no res_id (an
+         unsaved "new" record), which is what produced the New/Save/Discard
+         bar in the first place. This runs action_open_dashboard() instead,
+         which creates the record first and opens it by res_id. -->
+    <record id="action_tally_sync_dashboard" model="ir.actions.server">
+        <field name="name">Dashboard</field>
+        <field name="model_id" ref="model_tally_sync_dashboard" />
+        <field name="state">code</field>
+        <field name="code">action = model.action_open_dashboard()</field>
+    </record>
+</odoo>

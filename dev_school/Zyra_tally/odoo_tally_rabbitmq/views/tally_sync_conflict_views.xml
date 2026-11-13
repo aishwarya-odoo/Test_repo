@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_tally_sync_conflict_list" model="ir.ui.view">
+        <field name="name">tally.sync.conflict.list</field>
+        <field name="model">tally.sync.conflict</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="state=='pending'">
+                <field name="create_date" string="Detected" />
+                <field name="odoo_model" />
+                <field name="record_display_name" />
+                <field name="field_name" />
+                <field name="odoo_value" />
+                <field name="tally_value" />
+                <field name="state" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tally_sync_conflict_form" model="ir.ui.view">
+        <field name="name">tally.sync.conflict.form</field>
+        <field name="model">tally.sync.conflict</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_use_odoo_value" type="object" string="Use Odoo Value"
+                            class="btn-primary" invisible="state != 'pending'" />
+                    <button name="action_use_tally_value" type="object" string="Use Tally Value"
+                            class="btn-primary" invisible="state != 'pending'" />
+                    <button name="action_mark_resolved_manual" type="object" string="Mark Manually Merged"
+                            invisible="state != 'pending'" />
+                    <button name="action_ignore" type="object" string="Ignore" invisible="state != 'pending'" />
+                    <field name="state" widget="statusbar" statusbar_visible="pending,resolved_use_odoo,resolved_use_tally" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="odoo_model" />
+                            <field name="odoo_record_id" />
+                            <field name="record_display_name" />
+                            <field name="tally_object_type" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </group>
+                        <group>
+                            <field name="field_name" />
+                            <field name="odoo_value" />
+                            <field name="tally_value" />
+                        </group>
+                    </group>
+                    <group string="Resolution">
+                        <field name="resolved_by" />
+                        <field name="resolved_date" />
+                        <field name="notes" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tally_sync_conflicts" model="ir.actions.act_window">
+        <field name="name">Sync Conflicts</field>
+        <field name="res_model">tally.sync.conflict</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{"search_default_pending": 1}</field>
+    </record>
+
+    <record id="view_tally_sync_conflict_search" model="ir.ui.view">
+        <field name="name">tally.sync.conflict.search</field>
+        <field name="model">tally.sync.conflict</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="odoo_model" />
+                <field name="record_display_name" />
+                <filter name="pending" string="Pending Review" domain="[('state', '=', 'pending')]" />
+                <group>
+                    <filter name="group_by_model" string="Model" context="{'group_by': 'odoo_model'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

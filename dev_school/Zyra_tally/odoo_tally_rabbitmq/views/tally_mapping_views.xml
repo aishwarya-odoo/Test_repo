@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_tally_sync_mapping_list" model="ir.ui.view">
+        <field name="name">tally.sync.mapping.list</field>
+        <field name="model">tally.sync.mapping</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="sync_status=='error'" decoration-success="sync_status=='synced'">
+                <field name="odoo_model" />
+                <field name="odoo_reference" />
+                <field name="tally_object_type" />
+                <field name="tally_id" />
+                <field name="tally_name" />
+                <field name="sync_direction" />
+                <field name="sync_status" />
+                <field name="last_success_at" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tally_sync_mapping_form" model="ir.ui.view">
+        <field name="name">tally.sync.mapping.form</field>
+        <field name="model">tally.sync.mapping</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="odoo_model" />
+                            <field name="odoo_record_id" />
+                            <field name="odoo_reference" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </group>
+                        <group>
+                            <field name="tally_object_type" />
+                            <field name="tally_id" />
+                            <field name="tally_name" />
+                            <field name="sync_direction" />
+                            <field name="sync_status" />
+                        </group>
+                    </group>
+                    <group string="History">
+                        <field name="last_sync_at" />
+                        <field name="last_success_at" />
+                        <field name="last_error" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tally_sync_mapping" model="ir.actions.act_window">
+        <field name="name">Mappings</field>
+        <field name="res_model">tally.sync.mapping</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

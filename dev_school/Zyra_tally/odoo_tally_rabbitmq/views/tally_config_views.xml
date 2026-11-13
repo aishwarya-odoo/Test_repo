@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_tally_integration_config_form" model="ir.ui.view">
+        <field name="name">tally.integration.config.form</field>
+        <field name="model">tally.integration.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_test_rabbitmq_connection" type="object"
+                            string="Test RabbitMQ Connection" class="oe_highlight" />
+                    <button name="action_test_tally_connection" type="object"
+                            string="Test Tally Connection" class="oe_highlight" />
+                    <field name="connection_status" widget="statusbar"
+                           statusbar_visible="unknown,connected,failed" />
+                </header>
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="name" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                            <field name="active" />
+                            <field name="connection_checked_at" readonly="1" />
+                        </group>
+                        <group string="Tally">
+                            <field name="tally_company_name" />
+                            <field name="tally_company_identifier" />
+                            <field name="tally_gateway_url" />
+                            <field name="tally_connection_status" widget="badge"
+                                   decoration-success="tally_connection_status == 'connected'"
+                                   decoration-danger="tally_connection_status == 'failed'" />
+                            <field name="tally_connection_checked_at" readonly="1" />
+                        </group>
+                    </group>
+                    <group string="RabbitMQ">
+                        <group>
+                            <field name="rabbitmq_host" />
+                            <field name="rabbitmq_port" />
+                            <field name="rabbitmq_virtual_host" />
+                            <field name="rabbitmq_exchange" />
+                        </group>
+                        <group>
+                            <field name="rabbitmq_username" />
+                            <field name="rabbitmq_password" password="True" />
+                            <field name="rabbitmq_connection_timeout" />
+                            <field name="rabbitmq_heartbeat" />
+                        </group>
+                    </group>
+                    <group string="Synchronization">
+                        <group>
+                            <field name="sync_enabled" />
+                            <field name="customer_sync_enabled" />
+                            <field name="vendor_sync_enabled" />
+                            <field name="product_sync_enabled" />
+                        </group>
+                        <group>
+                            <field name="invoice_sync_enabled" />
+                            <field name="payment_sync_enabled" />
+                            <field name="retry_count" />
+                            <field name="retry_delay" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tally_integration_config_list" model="ir.ui.view">
+        <field name="name">tally.integration.config.list</field>
+        <field name="model">tally.integration.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="rabbitmq_host" />
+                <field name="sync_enabled" />
+                <field name="connection_status" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_tally_integration_config" model="ir.actions.act_window">
+        <field name="name">Configuration</field>
+        <field name="res_model">tally.integration.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
